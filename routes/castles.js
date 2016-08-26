@@ -28,12 +28,15 @@ router.post('/', validate, function (req, res) {
 });
 
 router.post('/:id/attack', findOne, function (req, res) {
-  var castle = req.body.castle;
+  var castles = req.body.castles;
+  // var castle = req.body.castle;
   var attackType = req.body.type;
 
   if (!attackType) { res.status(422).send({ message: 'No attack type!'}); }
   else {
-    castle.defend(attackType);
+    castles.forEach(function(castle) {
+      castle.defend(attackType);
+    })
     res.send({
       message: 'Castle attacked!',
       castle: castle
